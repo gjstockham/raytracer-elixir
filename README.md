@@ -1,24 +1,6 @@
-# Raytracer
+# raytracer-elixir
+Raytracing in One Weekend - Elixir version
 
-**TODO: Add description**
+This will implement as far as the moveable camera, but not depth of field.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
-
-  1. Add `raytracer` to your list of dependencies in `mix.exs`:
-
-    ```elixir
-    def deps do
-      [{:raytracer, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `raytracer` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:raytracer]]
-    end
-    ```
-
+It's intended to be a direct port as near as possible to the C++ version.  Any optimisations, or more idiomatic Elixir versions will be developed in separate branches.
