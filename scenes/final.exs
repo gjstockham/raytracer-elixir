@@ -1,25 +1,13 @@
 defmodule Raytracer.Scenes.Final do
-    def render_j(j, nx, ny, ns, world, camera) when j > 0 do
-        render_i(0, j, nx, ny, ns, world, camera)
-
-        render_j(j-1, nx, ny, ns, world, camera)
+    def render(nx, ny, ns, world, camera) do
+        for j <- (ny-1)..0 do
+            for i <- 0..(nx-1) do
+                render_sample(0, {0, 0, 0}, i, j, nx, ny, ns, world, camera)
+            end
+        end
     end
 
-    def render_j(j, nx, ny, ns, world, camera) do
-    end
-
-
-    def render_i(i, j, nx, ny, ns, world, camera)  when i < nx do
-        {r, g, b} = render_sample(0, {0, 0, 0}, i, j, nx, ny, ns, world, camera)
-
-        render_i(i+1, j, nx, ny, ns, world, camera)
-    end
-
-     def render_i(i, j, nx, ny, ns, world, camera)  do
-
-     end
-
-     def render_sample(s, c, i, j, nx, ny, ns, world, camera) when s < ns do
+    def render_sample(s, c, i, j, nx, ny, ns, world, camera) when s < ns do
          u = (i + :random.uniform) / nx
          v = (j + :random.uniform) / ny
          ray = Raytracer.Camera.get_ray(camera, u, v)
@@ -100,7 +88,7 @@ world = %Raytracer.World{
 # loop 
 
 {time_ns, output} = :timer.tc(fn ->
-  Raytracer.Scenes.Final.render_j(ny-1, nx, ny, ns, world, camera)
+  Raytracer.Scenes.Final.render(nx, ny, ns, world, camera)
 end)
 
 time_s = Float.round(time_ns / 1_000, 3)
