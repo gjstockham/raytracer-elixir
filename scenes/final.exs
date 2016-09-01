@@ -41,6 +41,13 @@ defmodule Raytracer.Scenes.Final do
          end
      end
    
+     def write_to_file(pixels, nx, ny) do
+        {:ok, file} = File.open "out.ppm", [:write]
+        IO.binwrite file, "P3\n"
+        IO.binwrite file, "#{nx} #{ny}\n"
+        IO.binwrite file, "255\n"
+        Enum.map(pixels, fn {r,g,b} -> IO.binwrite file, "#{round(255.99*r)} #{round(255.99*g)} #{round(255.99*b)}\n" end)
+    end
 end
 
 :random.seed(:erlang.now)
@@ -89,7 +96,11 @@ world = %Raytracer.World{
 
 {time_ns, output} = :timer.tc(fn ->
   Raytracer.Scenes.Final.render(nx, ny, ns, world, camera)
-end)
+end) 
+ 
+List.flatten(output)
+    |> Raytracer.Scenes.Final.write_to_file(nx, ny) 
+
 
 time_s = Float.round(time_ns / 1_000, 3)
 IO.puts "Completed in #{time_s} ms"

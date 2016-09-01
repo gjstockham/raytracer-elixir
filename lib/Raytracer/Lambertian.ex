@@ -5,7 +5,7 @@ defmodule Raytracer.Lambertian do
       def scatter(material, ray, hit_record) do
           target = hit_record.p 
             |> Raytracer.Vec3.add(hit_record.normal)
-            |> Raytracer.Vec3.add(Raytracer.Material.random_in_unit_sphere)
+            |> Raytracer.Vec3.add(Raytracer.Sampler.random_in_unit_sphere)
 
           scattered = %Raytracer.Ray{
               origin: hit_record.p,
